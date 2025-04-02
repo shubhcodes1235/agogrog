@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Atiuttam Agro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- 🛍 E-Commerce Navbar -->
+<nav class="navbar">
+    <div class="navbar-top">
+        <div class="brand">
+            <img src="img/logo.png" alt="Atiuttam Agro Logo" class="logo">
+            <div class="brand-text">
+                <h1>Atiuttam Agro</h1>
+                <p class="tagline">"Bringing Freshness to Your Doorstep"</p>
+            </div>
+        </div>
+
+        <div class="delivery-info">
+            <i class="fa fa-truck"></i>
+            <span>All India Delivery Available</span>
+        </div>
+
+        <div class="language-selector">
+            <label for="language"><i class="fa fa-globe"></i> Language: </label>
+            <select id="language">
+                <option value="en">English</option>
+                <option value="hi">हिन्दी</option>
+                <option value="mr">मराठी</option>
+                <option value="bn">বাংলা</option>
+            </select>
+        </div>
+
+        <!-- 🛒 Cart Menu -->
+        <div class="cart-menu" onclick="openCartPage()">
+            <i class="fa fa-shopping-cart cart-icon" id="cart-icon"></i>
+            <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </div>
+
+    <div class="navbar-bottom">
+        <div class="menu-icon" id="menu-icon"><i class="fa fa-bars"></i></div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- 🛒 Cart Section -->
+<div class="cart-container">
+    <h2>Your Shopping Cart</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items">
+            <!-- Products will be dynamically added -->
+        </tbody>
+    </table>
+    <h3>Total: ₹<span id="cart-total">0</span></h3>
+</div>
+
+<!-- 📝 Checkout Form -->
+<div class="checkout-form">
+    <h2>Checkout</h2>
+    <input type="text" id="customer-name" placeholder="Enter your name" required>
+    <input type="tel" id="customer-phone" placeholder="Enter your phone number" required>
+    <input type="text" id="customer-address" placeholder="Enter your full address" required>
+    <input type="text" id="customer-city" placeholder="Enter your city" required>
+    <button class="checkout-btn" onclick="redirectToWhatsApp()">Checkout on WhatsApp</button>
+</div>
+
+<script>
+    // 🛍 Load Cart Items
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function displayCart() {
+        let cartTable = document.getElementById("cart-items");
+        let totalAmount = 0;
+        cartTable.innerHTML = "";
+
+        cart.forEach((item, index) => {
+            let row = `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>
+                        <button onclick="changeQuantity(${index}, -1)">➖</button>
+                        ${item.quantity}
+                        <button onclick="changeQuantity(${index}, 1)">➕</button>
+                    </td>
+                    <td>₹${item.price}</td>
+                    <td>₹${item.price * item.quantity}</td>
+                    <td><button onclick="removeItem(${index})">❌</button></td>
+                </tr>
+            `;
+            totalAmount += item.price * item.quantity;
+            cartTable.innerHTML += row;
+        });
+
+        document.getElementById("cart-total").innerText = totalAmount;
+        document.getElementById("cart-count").innerText = cart.length;
+    }
+
+    // ➖➕ Update Quantity
+    function changeQuantity(index, change) {
+        cart[index].quantity += change;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCart();
+    }
+
+    // ❌ Remove Item from Cart
+    function removeItem(index) {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCart();
+    }
+
+    // 📲 Redirect to WhatsApp with Order Summary
+    function redirectToWhatsApp() {
+        let name = document.getElementById("customer-name").value.trim();
+        let phone = document.getElementById("customer-phone").value.trim();
+        let address = document.getElementById("customer-address").value.trim();
+        let city = document.getElementById("customer-city").value.trim();
+
+        if (!name || !phone || !address || !city) {
+            alert("⚠️ Please fill all the details.");
+            return;
+        }
+
+        let message = `🛍 Order Details:\n\n`;
+        cart.forEach((item) => {
+            message += `• ${item.name} - ${item.quantity} x ₹${item.price} = ₹${item.price * item.quantity}\n`;
+        });
+
+        message += `\n💰 Total: ₹${document.getElementById("cart-total").innerText}`;
+        message += `\n👤 Name: ${name}`;
+        message += `\n📞 Phone: ${phone}`;
+        message += `\n🏠 Address: ${address}, ${city}`;
+
+        let whatsappURL = `https://wa.me/7014434465?text=${encodeURIComponent(message)}`;
+        window.location.href = whatsappURL;
+    }
+
+    displayCart();
+</script>
+
+<!-- 🌿 Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="quick-links">
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="contact-info">
+            <h3>Contact Info</h3>
+            <p>Phone: +91 98765 43210</p>
+            <p>Email: info@atiuttamagro.com</p>
+        </div>
+        <div class="social-media">
+            <h3>Follow Us</h3>
+            <a href="#">FB</a>
+            <a href="#">IG</a>
+            <a href="#">TW</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
