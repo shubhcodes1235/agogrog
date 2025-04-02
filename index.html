@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atiuttam Agro - Sustainable Agriculture</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-</head>
-<body>
-<!-- E-Commerce Style Navbar -->
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atiuttam Agro - Sustainable Agriculture</title>
+  
+    <!-- 🌿 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora&display=swap" rel="stylesheet">
+  
+    <!-- 🎨 Tailwind CSS (Modern Styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  
+    <!-- 🌍 FontAwesome 6 (Better Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
+    <!-- 🎭 AOS (Animate on Scroll) - Smooth Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  
+    <!-- 🖼️ Swiper.js (Modern Image Sliders) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+  
+    <!-- 🎯 Bootstrap 5 (For Layouts & Components) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  
+    <!-- 🌿 Custom Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  
+<!-- 🌿 E-Commerce Agro Navbar -->
 <nav class="navbar">
   <div class="navbar-top">
+    <!-- Brand Logo & Name -->
     <div class="brand">
       <img src="img/logo.png" alt="Atiuttam Agro Logo" class="logo">
       <div class="brand-text">
         <h1>Atiuttam Agro</h1>
-        <p class="tagline">"Bringing Freshness to Your Doorstep"</p>
+        <p class="tagline">"Fresh & Organic - From Farm to Your Home"</p>
       </div>
     </div>
+
+    <!-- Delivery Info -->
     <div class="delivery-info">
       <i class="fa fa-truck"></i>
-      <span>All India Delivery Available</span>
+      <span>We Deliver All Over India!</span>
     </div>
+
+    <!-- Language Selector -->
     <div class="language-selector">
-      <label for="language"><i class="fa fa-globe"></i> Language: </label>
+      <label for="language"><i class="fa fa-globe"></i></label>
       <select id="language">
         <option value="en">English</option>
         <option value="hi">हिन्दी</option>
@@ -33,26 +55,53 @@
         <option value="bn">বাংলা</option>
       </select>
     </div>
+
+    <!-- Shopping Cart -->
+    <div class="cart-menu" onclick="openCartPage()">
+      <i class="fa fa-shopping-cart cart-icon" id="cart-icon"></i>
+      <span class="cart-count" id="cart-count">0</span>
+    </div>
+    
+    <script>
+      // 🛒 Load Cart Count from Local Storage
+      function updateCartCount() {
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+          document.getElementById("cart-count").innerText = totalItems;
+      }
+    
+      // 🔗 Redirect to Cart Page
+      function openCartPage() {
+          window.location.href = "cart.html";
+      }
+    
+      // 📌 Update Cart Count on Page Load
+      updateCartCount();
+    </script>
+
+    <!-- Greeting Message -->
     <div class="greeting">
-      <span>Welcome to Atiuttam Agro!</span>
+      <span>Welcome to Atiuttam Agro! 🌱</span>
     </div>
   </div>
 
   <div class="navbar-bottom">
-    <!-- Hamburger Menu for Mobile -->
+    <!-- Mobile Menu Icon -->
     <div class="menu-icon" id="menu-icon">
       <i class="fa fa-bars"></i>
     </div>
+
     <!-- Navigation Links -->
     <ul class="nav-links" id="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="categories.html">Categories</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html">🏡 Home</a></li>
+      <li><a href="categories.html">🍏 Categories</a></li>
+      <li><a href="about.html">🌿 About Us</a></li>
+      <li><a href="services.html">🚜 Our Services</a></li>
+      <li><a href="contact.html">📞 Contact</a></li>
     </ul>
   </div>
 </nav>
+
 
 
 <!-- Hero Section - E-Commerce Style -->
@@ -97,10 +146,10 @@
   </div>
 
   <!-- Navigation Arrows -->
-  <div class="slider-arrow left-arrow" onclick="changeSlide((currentIndex - 1 + slides.length) % slides.length)">
+  <div class="slider-arrow left-arrow" onclick="prevSlide()">
     &#10094; <!-- Left Arrow -->
   </div>
-  <div class="slider-arrow right-arrow" onclick="changeSlide((currentIndex + 1) % slides.length)">
+  <div class="slider-arrow right-arrow" onclick="nextSlide()">
     &#10095; <!-- Right Arrow -->
   </div>
 </section>
@@ -110,104 +159,313 @@
 <section id="seeds"></section>
 <section id="equipment"></section>
 
+
 <section class="product-list">
   <h2>Our Plants</h2>
-  <p class="section-description">Discover our hand-picked collection of Indian plants, perfect for sustainable farming, home gardening, or adding a touch of greenery to your space. Each plant is nurtured organically to ensure quality and vitality.</p>
-  
+  <p class="section-description">
+    Discover our hand-picked collection of Indian plants, perfect for sustainable farming, home gardening, or adding a touch of greenery to your space. Each plant is nurtured organically to ensure quality and vitality.
+  </p>
+
+  <!-- Sorting Dropdown -->
   <div class="sorting">
-      <label for="sort-by">Sort By:</label>
-      <select id="sort-by">
-          <option value="price">Price</option>
-          <option value="popularity">Popularity</option>
-          <option value="availability">Availability</option>
-      </select>
+    <label for="sort-by">Sort By:</label>
+    <select id="sort-by">
+      <option value="price">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="popularity">Popularity</option>
+      <option value="availability">Availability</option>
+    </select>
   </div>
-  
+
+  <!-- Product Grid -->
   <div class="product-grid">
-      <div class="product-card">
-          <img src="img/plants1.png" alt="Tulsi Plant">
-          <h3>तुलसी (Tulsi Plant)</h3>
-          <p>₹150</p>
-          <p class="product-desc">A sacred plant known for its medicinal properties, perfect for home remedies and spiritual use.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    <!-- Product Cards -->
+    <div class="product-card">
+      <img src="img/plants1.png" alt="Tulsi Plant">
+      <h3>तुलसी (Tulsi Plant)</h3>
+      <p class="price">₹150</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.5)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">A sacred plant known for its medicinal properties, perfect for home remedies and spiritual use.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
       </div>
-      <div class="product-card">
-          <img src="img/plants2.png" alt="Money Plant">
-          <h3>मनी प्लांट (Money Plant)</h3>
-          <p>₹250</p>
-          <p class="product-desc">A popular indoor plant believed to bring prosperity, easy to grow with minimal care.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants2.png" alt="Money Plant">
+      <h3>मनी प्लांट (Money Plant)</h3>
+      <p class="price">₹250</p>
+      <p class="rating">⭐⭐⭐⭐⭐ (5.0)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">A popular indoor plant believed to bring prosperity, easy to grow with minimal care.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
       </div>
-      <div class="product-card">
-          <img src="img/plants3.png" alt="Aloe Vera">
-          <h3>एलोवेरा (Aloe Vera)</h3>
-          <p>₹180</p>
-          <p class="product-desc">A versatile succulent with healing properties, ideal for skincare and small gardens.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants3.png" alt="Aloe Vera">
+      <h3>एलोवेरा (Aloe Vera)</h3>
+      <p class="price">₹180</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.2)</p>
+      <p class="stock low-stock">Only 5 left</p>
+      <p class="product-desc">A versatile succulent with healing properties, ideal for skincare and small gardens.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
       </div>
-      <div class="product-card">
-          <img src="img/plants4.png" alt="Ashwagandha">
-          <h3>अश्वगंधा (Ashwagandha)</h3>
-          <p>₹300</p>
-          <p class="product-desc">An ancient medicinal herb known for reducing stress and boosting energy.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants4.png" alt="Ashwagandha">
+      <h3>अश्वगंधा (Ashwagandha)</h3>
+      <p class="price">₹300</p>
+      <p class="rating">⭐⭐⭐⭐⭐ (4.8)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">An ancient medicinal herb known for reducing stress and boosting energy.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
       </div>
-      <div class="product-card">
-          <img src="img/plants5.png" alt="Peepal Tree">
-          <h3>पीपल (Peepal Tree)</h3>
-          <p>₹500</p>
-          <p class="product-desc">A sacred tree with large, heart-shaped leaves, great for shade and air purification.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants5.png" alt="Peepal Tree">
+      <h3>पीपल (Peepal Tree)</h3>
+      <p class="price">₹500</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.6)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">A sacred tree with large, heart-shaped leaves, great for shade and air purification.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
       </div>
-      <div class="product-card">
-          <img src="img/plants6.png" alt="Neem Plant">
-          <h3>नीम (Neem Plant)</h3>
-          <p>₹220</p>
-          <p class="product-desc">A natural pest repellent and medicinal plant, widely used in traditional remedies.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants6.png" alt="Neem Plant">
+      <h3>नीम (Neem Plant)</h3>
+      <p class="price">₹220</p>
+      <p class="rating">⭐⭐⭐⭐⭐ (5.0)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">A natural pest repellent and medicinal plant, widely used in traditional remedies.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
       </div>
-      <div class="product-card">
-          <img src="img/plants7.png" alt="Mango Plant">
-          <h3>आम (Mango Plant)</h3>
-          <p>₹450</p>
-          <p class="product-desc">A fruit-bearing plant that grows into a tree, perfect for orchards or large gardens.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants7.png" alt="Mango Plant">
+      <h3>आम (Mango Plant)</h3>
+      <p class="price">₹450</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.3)</p>
+      <p class="stock low-stock">Only 3 left</p>
+      <p class="product-desc">A fruit-bearing plant that grows into a tree, perfect for orchards or large gardens.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+
       </div>
-      <div class="product-card">
-          <img src="img/plants8.png" alt="Curry Leaf Plant">
-          <h3>करी पत्ता (Curry Leaf Plant)</h3>
-          <p>₹200</p>
-          <p class="product-desc">An aromatic plant used in Indian cuisine, easy to maintain in pots or gardens.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants8.png" alt="Curry Leaf Plant">
+      <h3>करी पत्ता (Curry Leaf Plant)</h3>
+      <p class="price">₹200</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.4)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">An aromatic plant used in Indian cuisine, easy to maintain in pots or gardens.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+
       </div>
-      <div class="product-card">
-          <img src="img/plants9.png" alt="Hibiscus Plant">
-          <h3>गुड़हल (Hibiscus Plant)</h3>
-          <p>₹280</p>
-          <p class="product-desc">A vibrant flowering plant with health benefits, ideal for ornamental gardens.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants9.png" alt="Hibiscus Plant">
+      <h3>गुड़हल (Hibiscus Plant)</h3>
+      <p class="price">₹280</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.7)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">A vibrant flowering plant with health benefits, ideal for ornamental gardens.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+
       </div>
-      <div class="product-card">
-          <img src="img/plants10.png" alt="Bamboo Plant">
-          <h3>बांस (Bamboo Plant)</h3>
-          <p>₹350</p>
-          <p class="product-desc">A fast-growing plant used for construction, decoration, and privacy screens.</p>
-          <a href="product.html" class="view-details">View Details</a>
+    </div>
+
+    <div class="product-card">
+      <img src="img/plants10.png" alt="Bamboo Plant">
+      <h3>बांस (Bamboo Plant)</h3>
+      <p class="price">₹350</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.5)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">A fast-growing plant used for construction, decoration, and privacy screens.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+
       </div>
+    </div>
   </div>
 </section>
 
-<section class="category-hero seeds">
-  <h1>Premium Quality Seeds for a Better Harvest!</h1>
-  <p>Start your farming journey with our carefully selected Indian seeds, designed for high yields and sustainability.</p>
-  <button class="cta-btn">Shop Now</button>
-</section>
-
+<!-- Seeds Section -->
 <section class="product-list">
   <h2>Our Seeds</h2>
   <p class="section-description">
-      Explore our premium range of seeds, sourced from India’s finest farms. Perfect for small-scale gardening or large agricultural projects, these seeds are tested for quality and germination to ensure a bountiful harvest.
+    Explore our premium range of seeds, sourced from India’s finest farms. Perfect for small-scale gardening or large agricultural projects, these seeds are tested for quality and germination to ensure a bountiful harvest.
   </p>
+
+  <!-- Sorting Dropdown -->
+  <div class="sorting">
+    <label for="sort-seeds">Sort By:</label>
+    <select id="sort-seeds">
+      <option value="price">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="popularity">Popularity</option>
+      <option value="availability">Availability</option>
+    </select>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="product-grid">
+    <!-- Product Cards -->
+    <div class="product-card">
+      <img src="img/seeds1.png" alt="Wheat Seeds">
+      <h3>गेहूं के बीज (Wheat Seeds)</h3>
+      <p class="price">₹200</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.5)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">High-yield wheat seeds perfect for staple crop farming in Indian climates.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds2.png" alt="Mustard Seeds">
+      <h3>सरसों के बीज (Mustard Seeds)</h3>
+      <p class="price">₹180</p>
+      <p class="rating">⭐⭐⭐⭐⭐ (5.0)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">Robust seeds ideal for oil production and culinary use.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds3.png" alt="Rice Seeds">
+      <h3>धान के बीज (Rice Seeds)</h3>
+      <p class="price">₹220</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.2)</p>
+      <p class="stock low-stock">Only 5 left</p>
+      <p class="product-desc">Quality rice seeds suited for wetland farming, ensuring a healthy crop.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds4.png" alt="Maize Seeds">
+      <h3>मक्का के बीज (Maize Seeds)</h3>
+      <p class="price">₹250</p>
+      <p class="rating">⭐⭐⭐⭐⭐ (4.8)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">Versatile corn seeds for food, fodder, and industrial uses.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds5.png" alt="Bajra Seeds">
+      <h3>बाजरा के बीज (Bajra Seeds)</h3>
+      <p class="price">₹190</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.6)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">Drought-resistant millet seeds, a nutritious staple in arid regions.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds6.png" alt="Sunflower Seeds">
+      <h3>सूरजमुखी के बीज (Sunflower Seeds)</h3>
+      <p class="price">₹300</p>
+      <p class="rating">⭐⭐⭐⭐⭐ (5.0)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">Bright and hardy seeds for oil and ornamental purposes.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds7.png" alt="Sesame Seeds">
+      <h3>तिल के बीज (Sesame Seeds)</h3>
+      <p class="price">₹260</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.7)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">Nutrient-rich seeds used for oil, sweets, and seasoning.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds8.png" alt="Cotton Seeds">
+      <h3>कपास के बीज (Cotton Seeds)</h3>
+      <p class="price">₹350</p>
+      <p class="rating">⭐⭐⭐⭐⭐ (5.0)</p>
+      <p class="stock available">In Stock</p>
+      <p class="product-desc">High-quality seeds for cotton fiber and oil production.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="img/seeds9.png" alt="Soybean Seeds">
+      <h3>सोयाबीन के बीज (Soybean Seeds)</h3>
+      <p class="price">₹280</p>
+      <p class="rating">⭐⭐⭐⭐☆ (4.3)</p>
+      <p class="stock low-stock">Only 3 left</p>
+      <p class="product-desc">Protein-rich seeds for food and animal feed.</p>
+      <div class="product-actions">
+        <button class="add-to-cart">Add to Cart</button>
+        <a href="product.html" class="show-details">Show Details</a>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+<section class="category-hero equipment">
+  <h1>Top-notch Equipment for Smart Farming! 🚜</h1>
+  <p>Enhance your agricultural efficiency with our durable and reliable Indian-made equipment.</p>
+  <button class="cta-btn">🛒 Shop Now</button>
+</section>
+
+<section class="product-list">
+  <h2>🌿 Our Equipment</h2>
+  <p class="section-description">Browse our premium farming tools, crafted for Indian agriculture. From **hand tools** to **advanced machinery**, our products enhance productivity and durability.</p>
+
   <div class="sorting">
       <label for="sort-options">Sort by:</label>
       <select id="sort-options">
@@ -216,79 +474,58 @@
           <option value="availability">Availability</option>
       </select>
   </div>
+
   <div class="product-grid">
       <div class="product-card">
-          <img src="img/seeds1.png" alt="Wheat Seeds" class="product-image">
-          <h3>गेहूं के बीज (Wheat Seeds)</h3>
-          <p class="price">₹200</p>
-          <p class="product-desc">High-yield wheat seeds perfect for staple crop farming in Indian climates.</p>
-          <a href="product.html" class="view-details">View Details</a>
+          <img src="img/equip1.png" alt="Agriculture Shovel">
+          <h3>कृषि फावड़ा (Agriculture Shovel)</h3>
+          <p class="price">₹600</p>
+          <p class="product-desc">A sturdy shovel for **digging** and **soil preparation**, built to last.</p>
+          <a href="product.html" class="view-details">🔍 View Details</a>
       </div>
+
       <div class="product-card">
-          <img src="img/seeds2.png" alt="Mustard Seeds" class="product-image">
-          <h3>सरसों के बीज (Mustard Seeds)</h3>
-          <p class="price">₹180</p>
-          <p class="product-desc">Robust seeds ideal for oil production and culinary use.</p>
-          <a href="product.html" class="view-details">View Details</a>
+          <img src="img/equip2.png" alt="Hand Sprayer">
+          <h3>हैंड स्प्रेयर (Hand Sprayer)</h3>
+          <p class="price">₹1,200</p>
+          <p class="product-desc">A **portable sprayer** for **fertilizers & pesticides** application.</p>
+          <a href="product.html" class="view-details">🔍 View Details</a>
       </div>
+
       <div class="product-card">
-          <img src="img/seeds3.png" alt="Rice Seeds" class="product-image">
-          <h3>धान के बीज (Rice Seeds)</h3>
-          <p class="price">₹220</p>
-          <p class="product-desc">Quality rice seeds suited for wetland farming, ensuring a healthy crop.</p>
-          <a href="product.html" class="view-details">View Details</a>
+          <img src="img/equip3.png" alt="Hoe">
+          <h3>कुदाल (Hoe)</h3>
+          <p class="price">₹550</p>
+          <p class="product-desc">Perfect for **weeding** and **breaking soil**, great for small farms.</p>
+          <a href="product.html" class="view-details">🔍 View Details</a>
       </div>
+
       <div class="product-card">
-          <img src="img/seeds4.png" alt="Maize Seeds" class="product-image">
-          <h3>मक्का के बीज (Maize Seeds)</h3>
-          <p class="price">₹250</p>
-          <p class="product-desc">Versatile corn seeds for food, fodder, and industrial uses.</p>
-          <a href="product.html" class="view-details">View Details</a>
+          <img src="img/equip4.png" alt="Sickle">
+          <h3>हंसिया (Sickle)</h3>
+          <p class="price">₹400</p>
+          <p class="product-desc">A sharp, curved blade ideal for **harvesting crops** like wheat & rice.</p>
+          <a href="product.html" class="view-details">🔍 View Details</a>
       </div>
+
       <div class="product-card">
-          <img src="img/seeds5.png" alt="Bajra Seeds" class="product-image">
-          <h3>बाजरा के बीज (Bajra Seeds)</h3>
-          <p class="price">₹190</p>
-          <p class="product-desc">Drought-resistant millet seeds, a nutritious staple in arid regions.</p>
-          <a href="product.html" class="view-details">View Details</a>
-      </div>
-      <div class="product-card">
-          <img src="img/seeds6.png" alt="Sunflower Seeds" class="product-image">
-          <h3>सूरजमुखी के बीज (Sunflower Seeds)</h3>
-          <p class="price">₹300</p>
-          <p class="product-desc">Bright and hardy seeds for oil and ornamental purposes.</p>
-          <a href="product.html" class="view-details">View Details</a>
-      </div>
-      <div class="product-card">
-          <img src="img/seeds7.png" alt="Sesame Seeds" class="product-image">
-          <h3>तिल के बीज (Sesame Seeds)</h3>
-          <p class="price">₹260</p>
-          <p class="product-desc">Nutrient-rich seeds used for oil, sweets, and seasoning.</p>
-          <a href="product.html" class="view-details">View Details</a>
-      </div>
-      <div class="product-card">
-          <img src="img/seeds8.png" alt="Cotton Seeds" class="product-image">
-          <h3>कपास के बीज (Cotton Seeds)</h3>
+          <img src="img/equip5.png" alt="Watering Can">
+          <h3>हजारा (Watering Can)</h3>
           <p class="price">₹350</p>
-          <p class="product-desc">High-quality seeds for cotton fiber and oil production.</p>
-          <a href="product.html" class="view-details">View Details</a>
+          <p class="product-desc">Lightweight can for **precise watering** of plants & seedlings.</p>
+          <a href="product.html" class="view-details">🔍 View Details</a>
       </div>
+
       <div class="product-card">
-          <img src="img/seeds9.png" alt="Soybean Seeds" class="product-image">
-          <h3>सोयाबीन के बीज (Soybean Seeds)</h3>
-          <p class="price">₹280</p>
-          <p class="product-desc">Protein-rich seeds for food and animal feed.</p>
-          <a href="product.html" class="view-details">View Details</a>
-      </div>
-      <div class="product-card">
-          <img src="img/seeds10.png" alt="Groundnut Seeds" class="product-image">
-          <h3>मूंगफली के बीज (Groundnut Seeds)</h3>
-          <p class="price">₹240</p>
-          <p class="product-desc">Oil-rich seeds for snacks, oil, and farming versatility.</p>
-          <a href="product.html" class="view-details">View Details</a>
+          <img src="img/equip6.png" alt="Plough">
+          <h3>हल (Plough)</h3>
+          <p class="price">₹2,500</p>
+          <p class="product-desc">A **robust plough** for **tilling soil**, perfect for medium farms.</p>
+          <a href="product.html" class="view-details">🔍 View Details</a>
       </div>
   </div>
 </section>
+
 
  <!--About Us Section -->
 <section class="about-section">
@@ -389,27 +626,7 @@
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section class="testimonials-section">
-    <h2>What Our Customers Say</h2>
-    <div class="testimonials-container">
-      <div class="testimonial-card">
-        <img src="img/farmer1.jpg" alt="Farmer 1">
-        <h3>Ramesh Patel</h3>
-        <p>"Atiuttam Agro’s seeds gave me the best yield ever!"</p>
-      </div>
-      <div class="testimonial-card">
-        <img src="img/farmer2.jpg" alt="Farmer 2">
-        <h3>Geeta Devi</h3>
-        <p>"Their equipment made farming so much easier."</p>
-      </div>
-      <div class="testimonial-card">
-        <img src="img/farmer3.jpg" alt="Farmer 3">
-        <h3>Vikram Singh</h3>
-        <p>"Fantastic support and quality products!"</p>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Contact Section -->
   <section class="contact-section">
